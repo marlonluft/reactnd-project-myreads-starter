@@ -1,6 +1,7 @@
 import React from 'react'
 import './App.css'
 import propTypes from 'prop-types'
+import ShelfOptions from './ShelfOptions.js'
 
 BooksGrid.propTypes = {
     books: propTypes.array.isRequired
@@ -11,8 +12,7 @@ function concatAuthors(authors) {
         authors.join(', ') : '';
 }
 
-function checkThumbnail(imageLinks)
-{
+function checkThumbnail(imageLinks) {
     return imageLinks && imageLinks.thumbnail ? imageLinks.thumbnail : '';
 }
 
@@ -25,13 +25,7 @@ function BooksGrid(props) {
                         <div className="book-top">
                             <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${checkThumbnail(book.imageLinks)}")` }}></div>
                             <div className="book-shelf-changer">
-                                <select>
-                                    <option value="move" disabled>Move to...</option>
-                                    <option value="currentlyReading">Currently Reading</option>
-                                    <option value="wantToRead">Want to Read</option>
-                                    <option value="read">Read</option>
-                                    <option value="none">None</option>
-                                </select>
+                                <ShelfOptions book={book} />
                             </div>
                         </div>
                         <div className="book-title">{book.title}</div>
