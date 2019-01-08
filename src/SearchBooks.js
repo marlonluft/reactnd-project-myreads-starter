@@ -22,17 +22,10 @@ class SearchBooks extends React.Component {
     }
 
     ListBooks = (searchValue) => {
-        if (/\S/.test(searchValue)) {
-            BooksAPI.search(searchValue)
-                .then(books => this.setState({
-                    booksFounded: books
-                }))
-        }
-        else {
-            this.setState({
-                booksFounded: []
-            })
-        }
+        BooksAPI.search(searchValue)
+            .then(books => this.setState({
+                booksFounded: (/\S/.test(this.state.search)) ? books : []
+            }))
     }
 
     render() {
