@@ -2,6 +2,7 @@ import React from 'react'
 import './App.css'
 import propTypes from 'prop-types'
 import ShelfOptions from './ShelfOptions.js'
+import * as BooksAPI from './BooksAPI'
 
 BooksGrid.propTypes = {
     books: propTypes.array.isRequired
@@ -20,6 +21,10 @@ function checkShelf(book) {
     return book && book.shelf ? book.shelf : 'none';
 }
 
+function onChangeShelf(bookId, shelf) {
+    BooksAPI.update({ id: bookId }, shelf);
+}
+
 function BooksGrid(props) {
     return (
         <ol className="books-grid">
@@ -29,7 +34,7 @@ function BooksGrid(props) {
                         <div className="book-top">
                             <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${checkThumbnail(book.imageLinks)}")` }}></div>
                             <div className="book-shelf-changer">
-                                <ShelfOptions shelf={checkShelf(book)} />
+                                <ShelfOptions shelf={checkShelf(book)} onChangeShelf={(shelf) => onChangeShelf(book.id, shelf)} />
                             </div>
                         </div>
                         <div className="book-title">{book.title}</div>
