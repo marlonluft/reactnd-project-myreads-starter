@@ -28,6 +28,29 @@ class SearchBooks extends React.Component {
             }))
     }
 
+    ShelfUpdate = (response) => {
+        let booksFoundedUpdated = this.state.booksFounded.map((book) => {
+            if (response.currentlyReading.indexOf(book.id) >= 0) {
+                book.shelf = 'currentlyReading';
+            }
+            else if (response.read.indexOf(book.id) >= 0) {
+                book.shelf = 'read';
+            }
+            else if (response.wantToRead.indexOf(book.id) >= 0) {
+                book.shelf = 'wantToRead';
+            }
+            else {
+                book.shelf = 'none';
+            }
+
+            return book;
+        })
+
+        this.setState({
+            booksFounded: booksFoundedUpdated
+        })
+    }
+
     render() {
 
         const { search, booksFounded } = this.state
@@ -50,7 +73,7 @@ class SearchBooks extends React.Component {
                     </div>
                 </div>
                 <div className="search-books-results">
-                    <BooksGrid books={booksFounded} />
+                    <BooksGrid books={booksFounded} ShelfUpdate={this.ShelfUpdate} />
                 </div>
             </div>
         )

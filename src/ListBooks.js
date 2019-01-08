@@ -28,6 +28,10 @@ class ListBooks extends React.Component {
         })
     }
 
+    ShelfUpdate = (response) => {
+        this.componentDidMount();
+    }
+
     render() {
 
         const { BooksCurrentlyReading, BooksWantToRead, BooksRead } = this.state
@@ -42,19 +46,19 @@ class ListBooks extends React.Component {
                         <div className="bookshelf">
                             <h2 className="bookshelf-title">Currently Reading</h2>
                             <div className="bookshelf-books">
-                                <BooksGrid books={BooksCurrentlyReading} />
+                                <BooksGrid books={BooksCurrentlyReading} ShelfUpdate={this.ShelfUpdate} />
                             </div>
                         </div>
                         <div className="bookshelf">
                             <h2 className="bookshelf-title">Want to Read</h2>
                             <div className="bookshelf-books">
-                                <BooksGrid books={BooksWantToRead} />
+                                <BooksGrid books={BooksWantToRead} ShelfUpdate={this.ShelfUpdate} />
                             </div>
                         </div>
                         <div className="bookshelf">
                             <h2 className="bookshelf-title">Read</h2>
                             <div className="bookshelf-books">
-                                <BooksGrid books={BooksRead} />
+                                <BooksGrid books={BooksRead} ShelfUpdate={this.ShelfUpdate} />
                             </div>
                         </div>
                     </div>

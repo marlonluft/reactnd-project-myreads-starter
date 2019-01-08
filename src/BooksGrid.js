@@ -5,7 +5,8 @@ import ShelfOptions from './ShelfOptions.js'
 import * as BooksAPI from './BooksAPI'
 
 BooksGrid.propTypes = {
-    books: propTypes.array.isRequired
+    books: propTypes.array.isRequired,
+    ShelfUpdate: propTypes.func.isRequired
 }
 
 function concatAuthors(authors) {
@@ -21,8 +22,10 @@ function checkShelf(book) {
     return book && book.shelf ? book.shelf : 'none';
 }
 
-function onChangeShelf(bookId, shelf) {
-    BooksAPI.update({ id: bookId }, shelf);
+function onChangeShelf(bookId, shelf, func) {
+    BooksAPI.update({ id: bookId }, shelf).then((response) => {
+        func(response)
+    })
 }
 
 function BooksGrid(props) {
@@ -34,7 +37,7 @@ function BooksGrid(props) {
                         <div className="book-top">
                             <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${checkThumbnail(book.imageLinks)}")` }}></div>
                             <div className="book-shelf-changer">
-                                <ShelfOptions shelf={checkShelf(book)} onChangeShelf={(shelf) => onChangeShelf(book.id, shelf)} />
+                                <ShelfOptions shelf={checkShelf(book)} onChangeShelf={(shelf) => onChangeShelf(book.id, shelf, props.ShelfUpdate)} />
                             </div>
                         </div>
                         <div className="book-title">{book.title}</div>
