@@ -8,13 +8,10 @@ BooksGrid.propTypes = {
 
 function concatAuthors(authors) {
     return authors ?
-    authors.join(', ') : '';
+        authors.join(', ') : '';
 }
 
 function BooksGrid(props) {
-
-
-
     return (
         <ol className="books-grid">
             {props.books.map((book) => (
