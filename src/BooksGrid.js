@@ -16,6 +16,10 @@ function checkThumbnail(imageLinks) {
     return imageLinks && imageLinks.thumbnail ? imageLinks.thumbnail : '';
 }
 
+function checkShelf(book) {
+    return book && book.shelf ? book.shelf : 'none';
+}
+
 function BooksGrid(props) {
     return (
         <ol className="books-grid">
@@ -25,7 +29,7 @@ function BooksGrid(props) {
                         <div className="book-top">
                             <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${checkThumbnail(book.imageLinks)}")` }}></div>
                             <div className="book-shelf-changer">
-                                <ShelfOptions book={book} />
+                                <ShelfOptions shelf={checkShelf(book)} />
                             </div>
                         </div>
                         <div className="book-title">{book.title}</div>

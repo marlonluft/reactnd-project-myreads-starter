@@ -3,19 +3,15 @@ import './App.css'
 import propTypes from 'prop-types'
 
 ShelfOptions.propTypes = {
-    book: propTypes.object.isRequired
-}
-
-function checkShelf(book) {
-    return book && book.shelf ? book.shelf : 'none';
+    shelf: propTypes.string.isRequired
 }
 
 function ShelfOptions(props) {
 
-    const { book } = props
+    const { shelf } = props
 
     return (
-        <select value={checkShelf(book)}>
+        <select value={shelf}>
             <option value="move" disabled>Move to...</option>
             <option value="currentlyReading">Currently Reading</option>
             <option value="wantToRead">Want to Read</option>
