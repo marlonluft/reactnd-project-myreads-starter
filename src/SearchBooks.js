@@ -23,7 +23,7 @@ class SearchBooks extends React.Component {
                     </div>
                 </div>
                 <div className="search-books-results">
-                    <BooksGrid />
+                    <BooksGrid books={[]} />
                 </div>
             </div>
         )

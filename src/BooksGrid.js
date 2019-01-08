@@ -1,10 +1,15 @@
 import React from 'react'
 import './App.css'
+import PropTypes from 'prop-types'
 
-class BooksGrid extends React.Component {
-    render() {
-        return (
-            <ol className="books-grid">
+BooksGrid.PropTypes = {
+    books: PropTypes.array.isRequired
+}
+
+function BooksGrid(props) {
+    return (
+        <ol className="books-grid">
+            {props.books.map((book) => (
                 <li>
                     <div className="book">
                         <div className="book-top">
@@ -23,9 +28,9 @@ class BooksGrid extends React.Component {
                         <div className="book-authors">Harper Lee</div>
                     </div>
                 </li>
-            </ol>
-        )
-    }
+            ))}
+        </ol>
+    )
 }
 
 export default BooksGrid
