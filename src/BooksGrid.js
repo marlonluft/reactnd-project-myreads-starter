@@ -1,9 +1,9 @@
 import React from 'react'
 import './App.css'
-import PropTypes from 'prop-types'
+import propTypes from 'prop-types'
 
-BooksGrid.PropTypes = {
-    books: PropTypes.array.isRequired
+BooksGrid.propTypes = {
+    books: propTypes.array.isRequired
 }
 
 function BooksGrid(props) {
