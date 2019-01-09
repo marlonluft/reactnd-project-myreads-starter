@@ -4,6 +4,17 @@ import { Link } from 'react-router-dom'
 import BooksGrid from './BooksGrid.js'
 import * as BooksAPI from './BooksAPI'
 
+function GetSavedBooks() {
+    const savedBooksString = localStorage.getItem("SavedBooks");
+
+    try {
+        var savedBooksObj = JSON.parse(savedBooksString);
+        return savedBooksObj;
+    } catch (ex) {
+        return null;
+    }
+}
+
 class SearchBooks extends React.Component {
     state = {
         search: '',
@@ -23,32 +34,39 @@ class SearchBooks extends React.Component {
 
     ListBooks = (searchValue) => {
         BooksAPI.search(searchValue)
-            .then(books => this.setState({
-                booksFounded: (/\S/.test(this.state.search)) ? books : []
-            }))
+            .then((books) => {
+                this.setState({
+                    booksFounded: (/\S/.test(this.state.search)) ? books : []
+                });
+
+                const savedBooks = GetSavedBooks();
+                this.ShelfUpdate(savedBooks);
+            })
     }
 
     ShelfUpdate = (response) => {
-        let booksFoundedUpdated = this.state.booksFounded.map((book) => {
-            if (response.currentlyReading.indexOf(book.id) >= 0) {
-                book.shelf = 'currentlyReading';
-            }
-            else if (response.read.indexOf(book.id) >= 0) {
-                book.shelf = 'read';
-            }
-            else if (response.wantToRead.indexOf(book.id) >= 0) {
-                book.shelf = 'wantToRead';
-            }
-            else {
-                book.shelf = 'none';
-            }
+        if (response && response.currentlyReading && response.read && response.wantToRead) {
+            let booksFoundedUpdated = this.state.booksFounded.map((book) => {
+                if (response.currentlyReading.indexOf(book.id) >= 0) {
+                    book.shelf = 'currentlyReading';
+                }
+                else if (response.read.indexOf(book.id) >= 0) {
+                    book.shelf = 'read';
+                }
+                else if (response.wantToRead.indexOf(book.id) >= 0) {
+                    book.shelf = 'wantToRead';
+                }
+                else {
+                    book.shelf = 'none';
+                }
 
-            return book;
-        })
+                return book;
+            })
 
-        this.setState({
-            booksFounded: booksFoundedUpdated
-        })
+            this.setState({
+                booksFounded: booksFoundedUpdated
+            })
+        }
     }
 
     render() {
