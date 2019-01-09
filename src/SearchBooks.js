@@ -22,9 +22,6 @@ class SearchBooks extends React.Component {
     }
 
     onSearchChange = (searchValue) => {
-
-        searchValue = searchValue.trim();
-
         this.setState({
             search: searchValue
         })
