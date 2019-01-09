@@ -4,21 +4,34 @@ import { Link } from 'react-router-dom'
 import BooksGrid from './BooksGrid.js'
 import * as BooksAPI from './BooksAPI'
 
-function GetSavedBooks() {
-    const savedBooksString = localStorage.getItem("SavedBooks");
+function GetBookId(book) {
+    return book.id;
+}
 
-    try {
-        var savedBooksObj = JSON.parse(savedBooksString);
-        return savedBooksObj;
-    } catch (ex) {
-        return null;
-    }
+function FilterBooks(books, shelf) {
+    return books.filter((book) => book.shelf === shelf);
 }
 
 class SearchBooks extends React.Component {
     state = {
         search: '',
-        booksFounded: []
+        booksFounded: [],
+        savedBooks: []
+    }
+
+    componentDidMount() {
+        BooksAPI.getAll().then((books) => {
+
+            const savedBooksObj = {
+                currentlyReading: FilterBooks(books, 'currentlyReading').map(GetBookId),
+                read: FilterBooks(books, 'read').map(GetBookId),
+                wantToRead: FilterBooks(books, 'wantToRead').map(GetBookId)
+            }
+
+            this.setState({
+                savedBooks: savedBooksObj
+            })
+        })
     }
 
     onSearchChange = (searchValue) => {
@@ -36,8 +49,7 @@ class SearchBooks extends React.Component {
                     booksFounded: (/\S/.test(this.state.search)) && books && !books.error ? books : []
                 });
 
-                const savedBooks = GetSavedBooks();
-                this.ShelfUpdate(savedBooks);
+                this.ShelfUpdate(this.state.savedBooks);
             })
     }
 

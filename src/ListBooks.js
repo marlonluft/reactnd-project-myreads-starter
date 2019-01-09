@@ -4,20 +4,6 @@ import { Link } from 'react-router-dom'
 import BooksGrid from './BooksGrid.js'
 import * as BooksAPI from './BooksAPI'
 
-function GetBookId(book) {
-    return book.id;
-}
-
-function StoreSavedBooks(booksCurrentlyReading, booksWantToRead, booksRead) {
-    const savedBooks = {
-        currentlyReading: booksCurrentlyReading.map(GetBookId),
-        read: booksRead.map(GetBookId),
-        wantToRead: booksWantToRead.map(GetBookId)
-    }
-
-    localStorage.setItem("SavedBooks", JSON.stringify(savedBooks));
-}
-
 class ListBooks extends React.Component {
     state = {
         BooksCurrentlyReading: [],
@@ -27,7 +13,6 @@ class ListBooks extends React.Component {
 
     componentDidMount() {
         BooksAPI.getAll().then((books) => {
-
             this.setState({
                 BooksCurrentlyReading: books.filter((book) => {
                     return book.shelf === 'currentlyReading'
@@ -39,8 +24,6 @@ class ListBooks extends React.Component {
                     return book.shelf === 'read'
                 })
             })
-
-            StoreSavedBooks(this.state.BooksCurrentlyReading, this.state.BooksWantToRead, this.state.BooksRead);
         })
     }
 
