@@ -4,7 +4,7 @@ import propTypes from 'prop-types'
 
 ShelfOptions.propTypes = {
     shelf: propTypes.string.isRequired,
-    onChangeShelf: propTypes.func.isRequired
+    onChangeShelf: propTypes.func.isRequired // function to update books in search/list page, in case of shelf has been changed
 }
 
 function ShelfOptions(props) {

@@ -12,6 +12,7 @@ class ListBooks extends React.Component {
     }
 
     componentDidMount() {
+        // Gets all saved books to list in page to they correspondent shelf
         BooksAPI.getAll().then((books) => {
             this.setState({
                 BooksCurrentlyReading: books.filter((book) => {
@@ -28,6 +29,7 @@ class ListBooks extends React.Component {
     }
 
     ShelfUpdate = (response) => {
+        // Refresh the list of books with the correct shelf for each book
         this.componentDidMount();
     }
 

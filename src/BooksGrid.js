@@ -10,19 +10,23 @@ BooksGrid.propTypes = {
 }
 
 function concatAuthors(authors) {
+    // Concatenate the array of author in one text to show in page
     return authors ?
         authors.join(', ') : '';
 }
 
 function checkThumbnail(imageLinks) {
+    // Check if the thumbnail exist, else set empty
     return imageLinks && imageLinks.thumbnail ? imageLinks.thumbnail : '';
 }
 
 function checkShelf(book) {
+    // Check if the shelf exist, else set none
     return book && book.shelf ? book.shelf : 'none';
 }
 
 function onChangeShelf(bookId, shelf, func) {
+    // On shelf change, update the book in the api and call the function in the father component
     BooksAPI.update({ id: bookId }, shelf).then((response) => {
         func(response)
     })
