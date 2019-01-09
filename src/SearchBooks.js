@@ -36,7 +36,7 @@ class SearchBooks extends React.Component {
         BooksAPI.search(searchValue)
             .then((books) => {
                 this.setState({
-                    booksFounded: (/\S/.test(this.state.search)) ? books : []
+                    booksFounded: (/\S/.test(this.state.search)) && books && !books.error ? books : []
                 });
 
                 const savedBooks = GetSavedBooks();
